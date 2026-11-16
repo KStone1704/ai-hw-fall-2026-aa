@@ -1,0 +1,689 @@
+{
+  "completed_utc": "2026-11-16T07:45:31.838929+00:00",
+  "runtime_seconds": 86.39,
+  "torch": "2.14.1",
+  "torchvision": "0.29.1",
+  "cpu_threads": 4,
+  "checkpoints": {
+    "mlp": {
+      "path": "transfer/checkpoints/mlp-6.pt",
+      "sha256": "9d4fcfd673ed05693ea8c7ad7d4e01be0bd32e0bfc29755cd8b19570c4740278",
+      "parameters": 100975,
+      "trial": 6,
+      "epoch": 8
+    },
+    "cnn": {
+      "path": "transfer/checkpoints/cnn-5.pt",
+      "sha256": "71929266e56ebe925d9e5ca85b50de865ebfa4b3864b550671ad0828d1e3f1ba",
+      "parameters": 101129,
+      "trial": 5,
+      "epoch": 5
+    },
+    "transformer": {
+      "path": "transfer/checkpoints/transformer-5.pt",
+      "sha256": "e61a7921595ebee1a696427517d656ac3b1d511dcf62135e29bccbab2207b43f",
+      "parameters": 100970,
+      "trial": 5,
+      "epoch": 8
+    }
+  },
+  "normalization": {
+    "mean": 0.13067043953945248,
+    "std": 0.30812228107625567
+  },
+  "dataset": "MNIST official test split",
+  "test_examples": 10000,
+  "test_file_sha256": {
+    "t10k-images-idx3-ubyte": "0fa7898d509279e482958e8ce81c8e77db3f2f8254e26661ceb7762c4d494ce7",
+    "t10k-labels-idx1-ubyte": "ff7bcfd416de33731a308c3f266cc351222c34898ecbeaf847f06e48f7ec33f2"
+  },
+  "clean_correct_counts": {
+    "mlp": 9751,
+    "cnn": 9895,
+    "transformer": 9728
+  },
+  "common_clean_correct_count": 9574,
+  "common_clean_index_sha256_int64le": "d720c58c962402acf464327bcaa0311d15b564f46cb7f3ea03897d72ad485159",
+  "attack": {
+    "objective": "maximize cross entropy on true label; success is any wrong prediction",
+    "threat_model": "source-only gradients; targets only score frozen adversarial examples",
+    "domain": "L-infinity budget in raw [0,1] pixels; normalization inside each model",
+    "steps": 10,
+    "alpha": "epsilon / 4",
+    "initialization": "clean",
+    "restarts": 0,
+    "momentum_by_method": {
+      "i-fgsm": 0.0,
+      "mi-fgsm": 1.0
+    },
+    "epsilons": [
+      0.05,
+      0.15
+    ],
+    "random_sign_seed": 20261115
+  },
+  "transfer": [
+    {
+      "epsilon": 0.05,
+      "method": "i-fgsm",
+      "source": "cnn",
+      "target": "cnn",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.055462711510340504,
+      "misclassified": 531,
+      "higher_true_label_loss": 9462
+    },
+    {
+      "epsilon": 0.05,
+      "method": "i-fgsm",
+      "source": "cnn",
+      "target": "mlp",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.007102569458951326,
+      "misclassified": 68,
+      "higher_true_label_loss": 8289,
+      "both_misclassified": 40,
+      "both_misclassified_same_wrong_label": 33
+    },
+    {
+      "epsilon": 0.05,
+      "method": "i-fgsm",
+      "source": "cnn",
+      "target": "transformer",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.02057656152078546,
+      "misclassified": 197,
+      "higher_true_label_loss": 7956,
+      "both_misclassified": 42,
+      "both_misclassified_same_wrong_label": 27
+    },
+    {
+      "epsilon": 0.05,
+      "method": "i-fgsm",
+      "source": "mlp",
+      "target": "cnn",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.0033423856277418006,
+      "misclassified": 32,
+      "higher_true_label_loss": 9088,
+      "both_misclassified": 27,
+      "both_misclassified_same_wrong_label": 22
+    },
+    {
+      "epsilon": 0.05,
+      "method": "i-fgsm",
+      "source": "mlp",
+      "target": "mlp",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.2547524545644454,
+      "misclassified": 2439,
+      "higher_true_label_loss": 9325
+    },
+    {
+      "epsilon": 0.05,
+      "method": "i-fgsm",
+      "source": "mlp",
+      "target": "transformer",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.03049926885314393,
+      "misclassified": 292,
+      "higher_true_label_loss": 8243,
+      "both_misclassified": 208,
+      "both_misclassified_same_wrong_label": 144
+    },
+    {
+      "epsilon": 0.05,
+      "method": "i-fgsm",
+      "source": "transformer",
+      "target": "cnn",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.0020889910173386254,
+      "misclassified": 20,
+      "higher_true_label_loss": 8947,
+      "both_misclassified": 17,
+      "both_misclassified_same_wrong_label": 13
+    },
+    {
+      "epsilon": 0.05,
+      "method": "i-fgsm",
+      "source": "transformer",
+      "target": "mlp",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.010027156883225401,
+      "misclassified": 96,
+      "higher_true_label_loss": 8168,
+      "both_misclassified": 86,
+      "both_misclassified_same_wrong_label": 55
+    },
+    {
+      "epsilon": 0.05,
+      "method": "i-fgsm",
+      "source": "transformer",
+      "target": "transformer",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.4345101316064341,
+      "misclassified": 4160,
+      "higher_true_label_loss": 9574
+    },
+    {
+      "epsilon": 0.05,
+      "method": "mi-fgsm",
+      "source": "cnn",
+      "target": "cnn",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.055984959264675165,
+      "misclassified": 536,
+      "higher_true_label_loss": 9458
+    },
+    {
+      "epsilon": 0.05,
+      "method": "mi-fgsm",
+      "source": "cnn",
+      "target": "mlp",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.007311468560685189,
+      "misclassified": 70,
+      "higher_true_label_loss": 8270,
+      "both_misclassified": 37,
+      "both_misclassified_same_wrong_label": 31
+    },
+    {
+      "epsilon": 0.05,
+      "method": "mi-fgsm",
+      "source": "cnn",
+      "target": "transformer",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.02308335074159181,
+      "misclassified": 221,
+      "higher_true_label_loss": 7986,
+      "both_misclassified": 50,
+      "both_misclassified_same_wrong_label": 32
+    },
+    {
+      "epsilon": 0.05,
+      "method": "mi-fgsm",
+      "source": "mlp",
+      "target": "cnn",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.0033423856277418006,
+      "misclassified": 32,
+      "higher_true_label_loss": 9085,
+      "both_misclassified": 27,
+      "both_misclassified_same_wrong_label": 22
+    },
+    {
+      "epsilon": 0.05,
+      "method": "mi-fgsm",
+      "source": "mlp",
+      "target": "mlp",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.2498433256736996,
+      "misclassified": 2392,
+      "higher_true_label_loss": 9322
+    },
+    {
+      "epsilon": 0.05,
+      "method": "mi-fgsm",
+      "source": "mlp",
+      "target": "transformer",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.03112596615834552,
+      "misclassified": 298,
+      "higher_true_label_loss": 8267,
+      "both_misclassified": 205,
+      "both_misclassified_same_wrong_label": 138
+    },
+    {
+      "epsilon": 0.05,
+      "method": "mi-fgsm",
+      "source": "transformer",
+      "target": "cnn",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.0020889910173386254,
+      "misclassified": 20,
+      "higher_true_label_loss": 8937,
+      "both_misclassified": 18,
+      "both_misclassified_same_wrong_label": 14
+    },
+    {
+      "epsilon": 0.05,
+      "method": "mi-fgsm",
+      "source": "transformer",
+      "target": "mlp",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.010236055984959264,
+      "misclassified": 98,
+      "higher_true_label_loss": 8188,
+      "both_misclassified": 86,
+      "both_misclassified_same_wrong_label": 53
+    },
+    {
+      "epsilon": 0.05,
+      "method": "mi-fgsm",
+      "source": "transformer",
+      "target": "transformer",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.4044286609567579,
+      "misclassified": 3872,
+      "higher_true_label_loss": 9574
+    },
+    {
+      "epsilon": 0.05,
+      "method": "random-sign",
+      "source": "none",
+      "target": "cnn",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.0006266973052015876,
+      "misclassified": 6,
+      "higher_true_label_loss": 8460
+    },
+    {
+      "epsilon": 0.05,
+      "method": "random-sign",
+      "source": "none",
+      "target": "mlp",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.0014622937121370379,
+      "misclassified": 14,
+      "higher_true_label_loss": 6872
+    },
+    {
+      "epsilon": 0.05,
+      "method": "random-sign",
+      "source": "none",
+      "target": "transformer",
+      "max_linf_observed": 0.050000011920928955,
+      "attack_success_rate": 0.012951744307499478,
+      "misclassified": 124,
+      "higher_true_label_loss": 7262
+    },
+    {
+      "epsilon": 0.15,
+      "method": "i-fgsm",
+      "source": "cnn",
+      "target": "cnn",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.919469396281596,
+      "misclassified": 8803,
+      "higher_true_label_loss": 9574
+    },
+    {
+      "epsilon": 0.15,
+      "method": "i-fgsm",
+      "source": "cnn",
+      "target": "mlp",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.05755170252767913,
+      "misclassified": 551,
+      "higher_true_label_loss": 9244,
+      "both_misclassified": 550,
+      "both_misclassified_same_wrong_label": 438
+    },
+    {
+      "epsilon": 0.15,
+      "method": "i-fgsm",
+      "source": "cnn",
+      "target": "transformer",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.32692709421349486,
+      "misclassified": 3130,
+      "higher_true_label_loss": 8782,
+      "both_misclassified": 3074,
+      "both_misclassified_same_wrong_label": 581
+    },
+    {
+      "epsilon": 0.15,
+      "method": "i-fgsm",
+      "source": "mlp",
+      "target": "cnn",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.02360559849592647,
+      "misclassified": 226,
+      "higher_true_label_loss": 9553,
+      "both_misclassified": 226,
+      "both_misclassified_same_wrong_label": 185
+    },
+    {
+      "epsilon": 0.15,
+      "method": "i-fgsm",
+      "source": "mlp",
+      "target": "mlp",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.9801545853352831,
+      "misclassified": 9384,
+      "higher_true_label_loss": 9572
+    },
+    {
+      "epsilon": 0.15,
+      "method": "i-fgsm",
+      "source": "mlp",
+      "target": "transformer",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.41497806559431794,
+      "misclassified": 3973,
+      "higher_true_label_loss": 8951,
+      "both_misclassified": 3962,
+      "both_misclassified_same_wrong_label": 2168
+    },
+    {
+      "epsilon": 0.15,
+      "method": "i-fgsm",
+      "source": "transformer",
+      "target": "cnn",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.011907248798830166,
+      "misclassified": 114,
+      "higher_true_label_loss": 9503,
+      "both_misclassified": 114,
+      "both_misclassified_same_wrong_label": 81
+    },
+    {
+      "epsilon": 0.15,
+      "method": "i-fgsm",
+      "source": "transformer",
+      "target": "mlp",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.07342803425945268,
+      "misclassified": 703,
+      "higher_true_label_loss": 9169,
+      "both_misclassified": 703,
+      "both_misclassified_same_wrong_label": 479
+    },
+    {
+      "epsilon": 0.15,
+      "method": "i-fgsm",
+      "source": "transformer",
+      "target": "transformer",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.9990599540421976,
+      "misclassified": 9565,
+      "higher_true_label_loss": 9574
+    },
+    {
+      "epsilon": 0.15,
+      "method": "mi-fgsm",
+      "source": "cnn",
+      "target": "cnn",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.901190724879883,
+      "misclassified": 8628,
+      "higher_true_label_loss": 9574
+    },
+    {
+      "epsilon": 0.15,
+      "method": "mi-fgsm",
+      "source": "cnn",
+      "target": "mlp",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.06308752872362648,
+      "misclassified": 604,
+      "higher_true_label_loss": 9247,
+      "both_misclassified": 603,
+      "both_misclassified_same_wrong_label": 471
+    },
+    {
+      "epsilon": 0.15,
+      "method": "mi-fgsm",
+      "source": "cnn",
+      "target": "transformer",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.3492792980990182,
+      "misclassified": 3344,
+      "higher_true_label_loss": 8818,
+      "both_misclassified": 3263,
+      "both_misclassified_same_wrong_label": 572
+    },
+    {
+      "epsilon": 0.15,
+      "method": "mi-fgsm",
+      "source": "mlp",
+      "target": "cnn",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.02548569041153123,
+      "misclassified": 244,
+      "higher_true_label_loss": 9549,
+      "both_misclassified": 244,
+      "both_misclassified_same_wrong_label": 198
+    },
+    {
+      "epsilon": 0.15,
+      "method": "mi-fgsm",
+      "source": "mlp",
+      "target": "mlp",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.975663254648005,
+      "misclassified": 9341,
+      "higher_true_label_loss": 9573
+    },
+    {
+      "epsilon": 0.15,
+      "method": "mi-fgsm",
+      "source": "mlp",
+      "target": "transformer",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.42458742427407564,
+      "misclassified": 4065,
+      "higher_true_label_loss": 8976,
+      "both_misclassified": 4055,
+      "both_misclassified_same_wrong_label": 2219
+    },
+    {
+      "epsilon": 0.15,
+      "method": "mi-fgsm",
+      "source": "transformer",
+      "target": "cnn",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.015354083977438896,
+      "misclassified": 147,
+      "higher_true_label_loss": 9503,
+      "both_misclassified": 147,
+      "both_misclassified_same_wrong_label": 100
+    },
+    {
+      "epsilon": 0.15,
+      "method": "mi-fgsm",
+      "source": "transformer",
+      "target": "mlp",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.0878420722790892,
+      "misclassified": 841,
+      "higher_true_label_loss": 9159,
+      "both_misclassified": 841,
+      "both_misclassified_same_wrong_label": 545
+    },
+    {
+      "epsilon": 0.15,
+      "method": "mi-fgsm",
+      "source": "transformer",
+      "target": "transformer",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.9920618341341132,
+      "misclassified": 9498,
+      "higher_true_label_loss": 9574
+    },
+    {
+      "epsilon": 0.15,
+      "method": "random-sign",
+      "source": "none",
+      "target": "cnn",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.0020889910173386254,
+      "misclassified": 20,
+      "higher_true_label_loss": 9341
+    },
+    {
+      "epsilon": 0.15,
+      "method": "random-sign",
+      "source": "none",
+      "target": "mlp",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.008878211823689159,
+      "misclassified": 85,
+      "higher_true_label_loss": 7998
+    },
+    {
+      "epsilon": 0.15,
+      "method": "random-sign",
+      "source": "none",
+      "target": "transformer",
+      "max_linf_observed": 0.15000003576278687,
+      "attack_success_rate": 0.2548569041153123,
+      "misclassified": 2440,
+      "higher_true_label_loss": 8351
+    }
+  ],
+  "clean_gradient_cosine": [
+    {
+      "pair": [
+        "mlp",
+        "cnn"
+      ],
+      "mean": 0.11780942976474762,
+      "median": 0.11845388263463974,
+      "fraction_positive": 0.928034245967865
+    },
+    {
+      "pair": [
+        "mlp",
+        "transformer"
+      ],
+      "mean": 0.12834620475769043,
+      "median": 0.1363728940486908,
+      "fraction_positive": 0.8617088198661804
+    },
+    {
+      "pair": [
+        "cnn",
+        "transformer"
+      ],
+      "mean": 0.0745348334312439,
+      "median": 0.07098440825939178,
+      "fraction_positive": 0.8248381018638611
+    }
+  ],
+  "clean_gradient_dot_clipped_source_fgsm": [
+    {
+      "epsilon": 0.05,
+      "source": "cnn",
+      "target": "mlp",
+      "positive_dot_product": 8858
+    },
+    {
+      "epsilon": 0.05,
+      "source": "cnn",
+      "target": "transformer",
+      "positive_dot_product": 7210
+    },
+    {
+      "epsilon": 0.05,
+      "source": "mlp",
+      "target": "cnn",
+      "positive_dot_product": 9069
+    },
+    {
+      "epsilon": 0.05,
+      "source": "mlp",
+      "target": "transformer",
+      "positive_dot_product": 7482
+    },
+    {
+      "epsilon": 0.05,
+      "source": "transformer",
+      "target": "cnn",
+      "positive_dot_product": 8633
+    },
+    {
+      "epsilon": 0.05,
+      "source": "transformer",
+      "target": "mlp",
+      "positive_dot_product": 8572
+    },
+    {
+      "epsilon": 0.15,
+      "source": "cnn",
+      "target": "mlp",
+      "positive_dot_product": 8859
+    },
+    {
+      "epsilon": 0.15,
+      "source": "cnn",
+      "target": "transformer",
+      "positive_dot_product": 7160
+    },
+    {
+      "epsilon": 0.15,
+      "source": "mlp",
+      "target": "cnn",
+      "positive_dot_product": 9116
+    },
+    {
+      "epsilon": 0.15,
+      "source": "mlp",
+      "target": "transformer",
+      "positive_dot_product": 7446
+    },
+    {
+      "epsilon": 0.15,
+      "source": "transformer",
+      "target": "cnn",
+      "positive_dot_product": 8740
+    },
+    {
+      "epsilon": 0.15,
+      "source": "transformer",
+      "target": "mlp",
+      "positive_dot_product": 8590
+    }
+  ],
+  "pixel_mask_diagnostic": {
+    "epsilon": 0.15,
+    "clean_zero_pixel_fraction": 0.8073948949749108,
+    "conditions": [
+      {
+        "perturbation": "cnn-mi-fgsm",
+        "condition": "nonzero_only",
+        "error_counts": {
+          "mlp": 153,
+          "cnn": 1164,
+          "transformer": 207
+        }
+      },
+      {
+        "perturbation": "cnn-mi-fgsm",
+        "condition": "zero_only",
+        "error_counts": {
+          "mlp": 218,
+          "cnn": 2254,
+          "transformer": 2603
+        }
+      },
+      {
+        "perturbation": "random-sign",
+        "condition": "nonzero_only",
+        "error_counts": {
+          "mlp": 23,
+          "cnn": 13,
+          "transformer": 46
+        }
+      },
+      {
+        "perturbation": "random-sign",
+        "condition": "uniform_zero_lift_0.075",
+        "error_counts": {
+          "mlp": 65,
+          "cnn": 7,
+          "transformer": 2116
+        }
+      },
+      {
+        "perturbation": "random-sign",
+        "condition": "zero_only",
+        "error_counts": {
+          "mlp": 70,
+          "cnn": 10,
+          "transformer": 2151
+        }
+      }
+    ]
+  }
+}
